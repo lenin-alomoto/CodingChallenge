@@ -11,7 +11,7 @@
 - Despliega el microservicio.
 - Crea la tabla en la bdd
 
-**endpoint: carpeta que contiene los endpoints**
+**Endpoint-postman: carpeta que contiene los endpoints**
 
 **URL swagger:** http://localhost:8080/swagger-ui.html
 
@@ -20,8 +20,8 @@
 - http://localhost:8080/actuator/health
 
 **Credenciales para revisar algunas URL's:**
-user=**springadmin**
-password=**security123**
+- user=**springadmin**
+- password=**security123**
  
 
 
