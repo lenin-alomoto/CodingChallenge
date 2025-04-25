@@ -1,0 +1,19 @@
+services:
+  mysqldb:
+    container_name: ${MYSQL_DB_NAME}
+    image: mysql:8
+    restart: always
+    environment:
+     - MYSQL_DATABASE=${MYSQL_DB_NAME}
+     - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+     - MYSQL_USER=${MYSQL_USERNAME}
+     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - 3306:3306
+  app:
+    build: ./micro-customer-management
+    depends_on:
+     - mysqldb
+    ports:
+     - "8080:8080"
+    restart: always

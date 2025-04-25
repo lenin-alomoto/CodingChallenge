@@ -1,6 +1,7 @@
 package com.coding.challenge.micro_customer_management.customer.application;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,9 @@ public class ReportUseCaseImpl implements ReportUseCase {
 
 	@Override
 	public Double calculateTheAverageAge() {
-		return reportCustomerRepositoryPort.calculateTheAverageAge();
+		var averageAge = reportCustomerRepositoryPort.calculateTheAverageAge();
+		
+		return Objects.nonNull(averageAge) ? averageAge : 0.0;
 	}
 
 	@Override

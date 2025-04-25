@@ -1,5 +1,6 @@
 package com.coding.challenge.micro_customer_management.customer.infrastructure.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -17,40 +18,36 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    	http.authorizeHttpRequests(request -> 
-    			request.requestMatchers("/api/reports/**")
-    			.permitAll()
-    			.requestMatchers("/swagger-ui/**")
-    			.permitAll()
-    			.requestMatchers("/v3/api-docs/**")
-    			.permitAll() 
-    			.requestMatchers("/swagger-ui.html")
-    			.permitAll()  
-    			.requestMatchers("/swagger-ui.html")
-    			.permitAll()
-    			.requestMatchers("/actuator/**")
-    			.authenticated()
-    		)
-    		.httpBasic(Customizer.withDefaults())
-    		.csrf(csrf -> csrf.disable());
+	@Value("${sprint.security.user}")
+	private String userName;
+	
+	@Value("${sprint.security.password}")
+	private String pass;
+
+	@Bean
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests(request -> request.requestMatchers("/api/reports/**").permitAll()
+				.requestMatchers("/swagger-ui/**").permitAll()
+				.requestMatchers("/v3/api-docs/**").permitAll()
+				.requestMatchers("/swagger-ui.html").permitAll()
+				.requestMatchers("/swagger-ui.html").permitAll()
+				.requestMatchers("/actuator/**").authenticated()
+				.requestMatchers("/api/customers/**").authenticated())
+				.httpBasic(Customizer.withDefaults()).csrf(csrf -> csrf.disable());
 		return http.build();
 	}
 
-    @Bean
-    UserDetailsService adminUser() {
-    	User.UserBuilder user = User.builder();
-    	UserDetails userAdministrator = user.username("springadmin")
-    			.password(passwordEncoder().encode("security123"))
-    			.roles()
-    			.build();
-    	
-    	return new InMemoryUserDetailsManager(userAdministrator);
-    }
-    
-    @Bean
-    PasswordEncoder passwordEncoder() {
-    	return new BCryptPasswordEncoder();
-    }
+	@Bean
+	UserDetailsService adminUser() {
+		User.UserBuilder user = User.builder();
+		UserDetails userAdministrator = user.username(userName).password(passwordEncoder().encode(pass))
+				.roles().build();
+
+		return new InMemoryUserDetailsManager(userAdministrator);
+	}
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

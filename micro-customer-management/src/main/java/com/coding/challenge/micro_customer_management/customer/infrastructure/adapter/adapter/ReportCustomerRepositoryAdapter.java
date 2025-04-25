@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class ReportCustomerRepositoryAdapter implements ReportCustomerRepositoryPort {
 
 	private final CustomerRepositoryJpa customerRepositoryJpa;
-	
+
 	private CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
 
 	@Override
@@ -41,13 +41,12 @@ public class ReportCustomerRepositoryAdapter implements ReportCustomerRepository
 
 	@Override
 	public List<CustomerReport> findAllCustomerWithLifeExpectancy(int ageLifeExpectancy) {
-		return customerRepositoryJpa.findAll().stream()
-				.map(customer -> {
-					var customerAge = customerMapper.toReportDomain(customer);
-					customerAge.setAgeLifeExpectancy(DateHelper.calculateLifeExpectancy(ageLifeExpectancy, customer.getAge()));
-					return customerAge;
-				}).toList();
-		
+		return customerRepositoryJpa.findAll().stream().map(customer -> {
+			var customerAge = customerMapper.toReportDomain(customer);
+			customerAge.setAgeLifeExpectancy(DateHelper.calculateLifeExpectancy(ageLifeExpectancy, customer.getAge()));
+			return customerAge;
+		}).toList();
+
 	}
-	
+
 }

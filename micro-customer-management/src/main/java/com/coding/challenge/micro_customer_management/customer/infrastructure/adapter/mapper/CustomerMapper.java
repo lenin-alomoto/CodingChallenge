@@ -1,5 +1,7 @@
 package com.coding.challenge.micro_customer_management.customer.infrastructure.adapter.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -11,6 +13,7 @@ import com.coding.challenge.micro_customer_management.customer.infrastructure.ad
 public interface CustomerMapper {
 
 	Customer toDomain(CustomerEntity customerEntity);
+	List<Customer> toDomain(List<CustomerEntity> customersEntity);
 	
 	CustomerEntity toEntity(Customer customer);
 	

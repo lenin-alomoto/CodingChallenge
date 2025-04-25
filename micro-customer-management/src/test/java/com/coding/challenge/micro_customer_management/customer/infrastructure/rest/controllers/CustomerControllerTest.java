@@ -19,10 +19,10 @@ class CustomerControllerTest {
 	private MockMvc mockController;
 	
 	@Test
-	void testFindAllCustomerForbidden() throws Exception {
+	void testFindAllCustomer() throws Exception {
 		mockController.perform(get("/api/customers")
                 .with(httpBasic("springadmin", "security123")))
-                .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
+                .andExpect(status().is(HttpStatus.OK.value()));
 	}
 
 	@Test
