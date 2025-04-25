@@ -20,8 +20,8 @@
 - http://localhost:8080/actuator/health
 
 **Credenciales para revisar algunas URL's:**
-- user=**springadmin**
-- password=**security123**
+- user= **springadmin**
+- password= **security123**
  
 
 
